@@ -1,0 +1,94 @@
+﻿@section Scripts{
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/js/app-assessments.js"></script>
+    <script src="~/js/assessmentsController.js"></script>
+    <script src="~/lib/angular-xeditable/dist/js/xeditable.js"></script>
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+<a href="#" class="btn btn-sm btn-success pull-right">Submit Changes</a>
+<p style="clear:both"></p>
+    <div ng-app="app-assessments">
+        <div ng-controller="assessmentsController as vm">
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Level</th>
+                    <th>Timing</th>
+                    <th>Marks</th>
+                    <th>Percentage</th>
+                    <th>Papers</th>
+                </tr>
+                <tr ng-repeat="assessment in vm.assessments">
+                    <td>
+                        <a href="#" editable-text="assessment.code">{{ assessment.code || 'please click to add a code' }}</a>
+                    </td>
+                    <td>
+                        <a href="#" editable-text="assessment.description">{{ assessment.description || 'please click to add a description' }}</a>
+                    </td>
+                    <td>
+                        <a href="#" editable-text="assessment.level">{{ assessment.level || 'please click to add a level' }}</a>
+                    </td>
+                    <td>
+                        <a href="#" editable-text="assessment.timing">{{ assessment.timing || 'please click to add a timing' }}</a>
+                    </td>
+                    <td>
+                        <a href="#" editable-text="assessment.marks">{{ assessment.marks || 'please click to add a marks' }}</a>
+                    </td>
+                    <td>
+                        <a href="#" editable-text="assessment.percentage">{{ assessment.percentage || 'please click to add a percentage' }}</a>
+                    </td>
+                    <td>
+                        <ul ng-repeat="paper in assessment.exampapers">
+                            <li><a href="{{paper.source}}">{{paper.year}}</a></li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-sm btn-primary" id="create">Add a New Assessment</button>
+            <div id="add">
+                <h3>Add a new Assessement</h3>
+                <form novalidate name="newAssessementForm" ng-submit="vm.addNewAssessment()">
+                    <table class="table table-responsive table-striped">
+                        <tr>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Level</th>
+                            <th>Timing</th>
+                            <th>Marks</th>
+                            <th>Percentage</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="form-control" type="text" id="code" name="code" ng-model="vm.newAssessment.code" required ng-minlength="5" />
+                                <span ng-show="newAssessementForm.code.$error.required" class="text-warning">Assessment code is required.</span>
+                                <span ng-show="newAssessementForm.code.$error.minlength" class="text-warning">Assessment code must be greater than Five.</span>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" id="description" name="description" ng-model="vm.newAssessment.description" required />
+                                <span ng-show="newAssessementForm.description.$error.required" class="text-warning">Assessment description is required.</span>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" id="level" name="level" ng-model="vm.newAssessment.level" required />
+                                <span ng-show="newAssessementForm.level.$error.required" class="text-warning">Assessment level is required.</span>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" id="timing" name="timing" ng-model="vm.newAssessment.timing" required />
+                                <span ng-show="newAssessementForm.timing.$error.required" class="text-warning">Assessment timing is required.</span>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" id="marks" name="marks" ng-model="vm.newAssessment.marks" required />
+                                <span ng-show="newAssessementForm.marks.$error.required" class="text-warning">Assessment marks is required.</span>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" id="percentage" name="percentage" ng-model="vm.newAssessment.percentage" required />
+                                <span ng-show="newAssessementForm.percentage.$error.required" class="text-warning">Assessment percentage is required.</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" value="Add" class="btn btn-success btn-sm" ng-disabled="newAssessementForm.$invalid" />
+                </form>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,31 @@
+﻿@section Scripts{
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/js/app-topics.js"></script>
+    <script src="~/js/topicsController.js"></script>
+}
+
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<div ng-app="app-topics">
+    <div ng-controller="topicsController as vm">
+        <table class="table table-responsive table-striped">
+            <tr ng-repeat="topic in vm.topics">
+                <td>{{topic.name}}</td>
+                <td>{{topic.created | date:'dd-MM-yyyy'}}</td>
+                <td><a href="#" class="btn btn-sm btn-primary">Manage</a></td>
+            </tr>
+        </table>
+        <form novalidate name="newTopicForm" ng-submit="vm.addTopic()">
+            <div class="form-group">
+                <label for="name">Topic Name</label>
+                <input class="form-control" type="text" id="name" , name="name" ng-model="vm.newTopic.name" required ng-minlength="5"/>
+                <span ng-show="newTopicForm.name.$error.required" class="text-warning">Topic name is required.</span>
+                <span ng-show="newTopicForm.name.$error.minlength" class="text-warning">Topic name must be greater than Five.</span>
+            </div>
+            <div>
+                <input type="submit" value="Add" class="btn btn-success btn-sm" ng-disabled="newTopicForm.$invalid"/>
+            </div>
+        </form>
+    </div>
+</div>
